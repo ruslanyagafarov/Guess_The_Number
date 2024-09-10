@@ -1,28 +1,49 @@
 package com.game.guess_the_number.Service;
 
-import com.game.guess_the_number.Model.GameModel;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GameService {
-    private GameModel game;
+    private int targetNumber;
+    private int attempts;
 
     public GameService() {
-        this.game = new GameModel();
-    }
-
-    public String guess(int number) {
-        game.incrementAttempts();
-        if (number == game.getTargetNumber()) {
-            return "Поздравляем, вы угадали число " + number + " с " + game.getAttempts() + " попыток!";
-        } else if (number < game.getTargetNumber()) {
-            return "Загаданное число больше!";
-        } else {
-            return "Загаданное число меньше!";
-        }
+        resetGame();
     }
 
     public void resetGame() {
-        this.game = new GameModel();
+        targetNumber = (int) (Math.random() * 100) + 1;
+        attempts = 0;
+    }
+
+    public boolean checkGuess(int guess) {
+        return guess == targetNumber;
+    }
+
+    public List<Integer> getNumberOptions() {
+        List<Integer> options = new ArrayList<>();
+        options.add(targetNumber);
+        while (options.size() < 10) {int number = (int) (Math.random() * 100) + 1;
+            if (!options.contains(number)) {
+                options.add(number);
+            }
+        }
+        java.util.Collections.shuffle(options);
+        return options;
+    }
+
+    public int incrementAttempts() {
+        return ++attempts;
+    }
+
+    public int getTargetNumber() {
+        return targetNumber;
+    }
+
+    public int getAttempts() {
+        return attempts;
     }
 }

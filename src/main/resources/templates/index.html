@@ -2,14 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Игра угадай число</title>
+    <title>Игра Угадай Число</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Добро пожаловать в игру "Угадай число"</h1>
-<form action="/guess" method="post">
-    <label for="number">Введите число:</label>
-    <input type="number" id="number" name="number">
-    <button type="submit">Проверить</button>
-</form>
+<div class="container">
+    <div class="jumbotron text-center mt-5">
+        <h1>Игра Угадай Число</h1>
+        <p>Выберите число от 1 до 100.</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="/guess" method="post" class="text-center">
+                <div class="form-group">
+                    <label for="number">Выберите число:</label>
+                    <select name="number" id="number" class="form-control">
+                        <option th:each="num : ${numberOptions}" th:value="${num}" th:text="${num}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Угадать</button>
+            </form>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <p>Вы сделали попыток: <span th:text="${attempts}">0</span></p>
+    </div>
+    <div class="text-center mt-4">
+        <a href="/reset" class="btn btn-warning">Сбросить игру</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
